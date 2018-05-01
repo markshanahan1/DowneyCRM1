@@ -1,0 +1,63 @@
+<form #f="ngForm" (ngSubmit)="onCompanySubmit(f)">
+
+  <h1 class="center">Register Company</h1>
+  <div class="col-sm-6 left">
+  <div class="form-group">
+    <label for="inputName">Company Name</label>
+   <input type="text" class="form-control" id="inputName" name="compname" ngModel required #compname="ngModel">
+  </div>
+  <div class="form-group">
+    <label for="inputEmail">Email address</label>
+    <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"   name="email" ngModel required #email="ngModel">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div> 
+  <div class="form-group">
+    <label for="inputWebsite">Website:</label>
+    <input type="text" class="form-control" id="inputWebsite" name="website" ngModel required #website="ngModel">
+  </div>
+  <div class="form-group">
+    <label for="inputReg">Registration Number:</label>
+    <input type="text" class="form-control" id="inputReg" name="companyRegNum" ngModel required #companyRegNum="ngModel">
+  </div>
+  </div>
+   <div class="col-sm-6 right">
+     <div class="form-group">
+    <label for="inputPhone">Phone Number</label>
+    <input type="text" class="form-control" id="inputPhone"  name="phone" ngModel required #phone="ngModel">
+  </div>
+      <div class="form-group">
+    <label for="inputAddress">Address Line 1</label>
+    <input type="text" class="form-control" id="inputAddress" name="street" ngModel required #street="ngModel">
+  </div>
+   <div class="form-group">
+    <label for="inputTown">Town</label>
+    <input type="text" class="form-control" id="inputTown"  name="town" ngModel required #town="ngModel">
+  </div>
+   <div class="form-group">
+    <label for="inputCounty">County</label>
+    <input type="text" class="form-control" id="inputCounty" name="county" ngModel required #county="ngModel">
+  </div>
+   <div class="form-group">
+    <label for="inputCountry">Country</label>
+    <input type="text" class="form-control" id="inputCountry" name="country" ngModel required #country="ngModel">
+  </div>
+  
+  
+   </div>
+   <div class="col-md-12">
+    <h4 class="text-al--center">Your Job Role</h4>
+    <div class="col-md-6">
+         <label for="inputCountry">Access Allowance:</label>
+      <select name="empType" ngModel required #empType="ngModel">
+  <option value="Admin">Admin</option>
+  <option value="Employee">Employee</option>
+</select></div>
+    <div class="col-md-6">
+      <div class="form-group">
+    <label for="inputCountry">Your Job Position</label>
+    <input type="text" class="form-control" id="inputCountry" name="empPosition" ngModel required #empPosition="ngModel" >
+  </div>
+    </div>
+  </div>
+   <input type="submit" class=" col-sm-12 btn btn-default" value="Register Company" name="country" ngModel required #country="ngModel">
+</form>

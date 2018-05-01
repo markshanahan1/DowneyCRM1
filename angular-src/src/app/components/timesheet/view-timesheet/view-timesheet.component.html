@@ -1,0 +1,76 @@
+ <!-- Page Heading -->
+ <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+                        Timesheet View: <small *ngIf="ts">By Project </small>
+                    </h1>
+      <ol class="breadcrumb">
+        <li >
+          <i class="fa fa-dashboard"></i> Dashboard
+        </li>
+        <li >
+            <i class="fa fa-dashboard"></i> Timesheet Manager
+          </li>
+        <li class="active">
+            <i class="fa fa-dashboard"></i> View Timesheets By Project
+          </li>
+      </ol>
+    </div>
+  </div>
+  <!-- /.row -->
+<div class="row">
+    
+    <hr>
+    <ngb-tabset>
+        <ngb-tab *ngFor="let g of project.Services.stages; index as h" title="Stage {{h+1}}" class="active">
+          <ng-template ngbTabContent>
+            <h4 class="text-al--left col-sm-6"><i class="glyphicon glyphicon-tag" [ngStyle]="{
+              color: budgetIndicator(h)}" style=" text-shadow: 2px 2px 5px #bbb;" *ngIf="isUserLead()"> </i> {{g.stage_title}} </h4>
+              
+              
+           <div class="table-responsive col-sm-12">          
+              <table class="table table-striped">
+                  <thead>
+                    <tr >
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Employee</th>
+                      <th>Client</th>
+                      <th>Project</th>
+                      <th>Stage</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let t of ts_stages[h]; let i = index">
+                        <td><p class="text-al--left">{{changeIdtoDate(t.date)}}</p> </td>
+                        <td><p class="text-al--left">{{t.hour}}</p> </td>
+                        <td><p class="text-al--left">{{t.empUsername}}</p> </td>
+                        <td><p class="text-al--left">{{t.client.clTitle}}</p> </td>
+                        <td><p class="text-al--left">{{t.project.prTitle}}</p> </td>
+                        <td><p class="text-al--left">{{t.stage.stTitle}}</p> </td>
+                        <td><p class="text-al--left">{{t.Details}}</p> </td>
+                    </tr>
+                    
+                  </tbody>
+                  
+                </table>
+              </div>
+            
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+         
+
+         <button class="btn btn-primary" (click)="updateProgress()" [disabled]="!updateflag">UPDATE</button>
+
+
+
+
+</div>
+    
+      
+    
+        
+
+   

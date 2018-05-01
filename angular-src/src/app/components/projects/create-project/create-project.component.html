@@ -1,0 +1,36 @@
+<form #f="ngForm" (ngSubmit)="onProjectCreate(f)">
+
+  <h1 class="center">Create New Project</h1>
+  <div class="col-sm-6 left">
+  
+  <div class="form-group">
+    <label for="inputName">Project title</label>
+    <input type="text" class="form-control" id="inputName" name="title" ngModel required #title="ngModel">
+  </div>
+  <div class="form-group">
+      <label for="inputName">Client</label>
+      <select class="form-control" name="client" #client="ngModel" ngModel >
+          
+          <option value="{{cli._id}}" *ngFor="let cli of clients.client" >{{cli.Name}}</option>
+      </select>
+    
+
+  </div>
+  <div class="form-group">
+    <label for="inputEmail">Site Address</label>
+    <input type="text" class="form-control" id="inputAddress" name="address" ngModel required #address="ngModel">
+  </div> 
+</div>
+<div class="col-sm-6 right" *ngIf="stages != undefined">
+    <div class="col-sm-12" *ngFor="let g of stages; index as h">
+    <ul class="servicegroups col-sm-12">
+        <h4>{{g.stage_title}}</h4> 
+        <li *ngFor="let info of g.services index as i">
+            <p > <input type="checkbox" name="info.isActive" [(ngModel)]="info.isActive" value="">{{ info.title }} </p>
+        </li>
+        
+      </ul>
+      </div>
+</div>
+ <input type="submit" class=" col-sm-12 btn btn-default" value="Register">
+</form>

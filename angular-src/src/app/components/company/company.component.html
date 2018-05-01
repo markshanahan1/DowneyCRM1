@@ -1,0 +1,121 @@
+<div class="searchCompany" *ngIf="!isCompanyRegistered()">
+
+  <form #f="ngForm" (ngSubmit)="onCompanySearchSubmit(f)" *ngIf="!isCompaniesSearched()">
+      <div class="wrap">
+          <h4 class="text-al--center">You have not assigned your company to your profile. Please search for your company below.</h4>
+          <div class="search">
+              <input type="text" class="searchTerm" placeholder="Search for your company" name="searchEntry" ngModel required #searchEntry="ngModel">
+              <button type="submit" class="searchButton">
+                <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </div>
+       </div>
+
+       <div class="col-sm-12" *ngIf="!isListEmpty()">
+           <ul>
+              
+           </ul>
+       </div>
+  </form>
+
+  <h4 class="text-al--center" *ngIf="isListEmpty()">The company you are looking for does not exist. Please register company by clicking <a [routerLink]="'/AddCompany'">here</a> and follow instructions.</h4>
+  <div class="col-sm-12" *ngIf="isCompaniesSearched()">
+      <h1>Company List</h1>
+     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Registration Number</th>
+                <th>Email</th>
+                <th>Actions</th>
+              
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Registration Number</th>
+                <th>Email</th>
+                 <th>Actions</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr *ngFor="let comp of companyArr index as i" [attr.data-index]="i">
+                <td>{{comp.name}}</td>
+                <td>{{comp.street}}, {{comp.town}}, {{comp.county}}</td>
+                <td>{{comp.companyRegNum}}</td>
+                <td>{{comp.email}}</td>
+                <td><a class="btn btn-primary" (click)="joinCompany(i)">Join Company</a> <a class="btn btn-primary">View Company</a></td>
+                
+            </tr>
+        </tbody>
+    </table>
+  
+</div>
+
+
+</div>
+
+<div class="col-sm-12 viewCompany" *ngIf="isCompanyRegistered()">
+
+      <h1 class="text-al--center">{{company.name}}</h1>
+      
+
+  <div class="col-sm-6">
+     <h4>Company Address</h4>
+    <small>{{company.street}},</small>
+    <small> {{company.town}}  </small>
+    <small> {{company.county}}</small>
+    <small> {{company.country}}</small>
+  </div>
+  <div class="col-sm-6">
+    <h4>Company Registration Number</h4>
+    <small> {{company.companyRegNum}}</small>
+     <h4>Company Website</h4>
+    <small> {{company.website}}</small>
+     <h4>Company Email</h4>
+    <small> {{company.email}}</small> 
+    <h4>Company Contact Number</h4>
+    <small> {{company.phone}}</small>
+
+  </div>
+  <div class="col-11" style="display:block; position:relative; margin:0 auto;" ><hr></div>
+<div class="col-sm-12">
+      <h1>Company Employees</h1>
+     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+        </tbody>
+    </table>
+  
+</div>
+</div>

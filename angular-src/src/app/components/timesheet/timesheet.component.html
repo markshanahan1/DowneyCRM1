@@ -1,0 +1,266 @@
+
+<!-- Page Heading -->
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">
+                      Timesheet Manager <small>List Overview</small>  <!--<button class="btn btn-primary" (click)="toggleNew()"><i class="glyphicon glyphicon-plus"></i> Add New Project</button> -->
+                  </h1>
+    <ol class="breadcrumb">
+      <li >
+        <i class="fa fa-dashboard"></i> Dashboard
+      </li>
+      <li class="active">
+          <i class="fa fa-dashboard"></i> Timesheet Manager
+        </li>
+    </ol>
+  </div>
+</div>
+<!-- /.row -->
+
+ 
+<div class="row">
+  <div class="col-sm-4"><button class="btn btn-primary col-sm-12 text-al--center" (click)="previousDay()"><i class="glyphicon glyphicon-chevron-left"></i>Previous Day</button></div>
+  <div class="col-sm-4"><p class="label label-default col-sm-12 text-al--center fa-2x">{{displayDate()}}</p></div>
+  <div class="col-sm-4"><button class="btn btn-primary col-sm-12 text-al--center" (click)="nextDay()"> Next Day<i class="glyphicon glyphicon-chevron-right"></i></button></div>
+  
+</div>
+  <div class="row">
+    <div class="col-sm-12 table-responsive">
+        <p class="label label-warning" *ngIf="isCompany()">Company Entity cannot save employee timesheets. Please sign in as employee user to log timesheets.</p>
+        <p class="label label-warning" *ngIf="maxDayDiff()">You can only enter your timesheets up to 14 days after timesheet date.</p>
+        <p class="label label-warning" *ngIf="isNoProject()">There are no projects currently active so no timesheets are allowed to be logged.</p>
+        <table class="table table-striped" *ngIf="!isCompany() && (!isNoProject() && !maxDayDiff())">
+            <thead>
+                <tr >
+                  <th>Date/Time</th>
+          
+                  <th>Client</th>
+                  <th>Project</th>
+                  <th>Stage</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+          <tbody>
+                         <tr *ngIf="!isCompany()&&!maxDayDiff()">
+          <td class="text-al--left">
+            <select class="form-control" name="ts.hour" [(ngModel)]="ts.hour" (change)="time_picked1=true">
+              <option  selected hidden>Choose Time</option>
+              <option  *ngFor="let t of time" value="{{t}}" >{{toTime(t)}}</option>
+            </select>
+        </td>
+        
+        <td class="text-al--left">
+            <!-- <input type="text" class="form-control" id="inputReg" name="Details" (change)="checkhour()" [(ngModel)]="Details" required >  -->
+          <select class="form-control" name="ts.clientId" [(ngModel)]="ts.clientId" [disabled]="!time_picked1" (change)="getProj($event); upCliInd($event); cli_picked=true">
+              <option  selected hidden>Choose Stage</option>
+              <option  *ngFor="let cli of client; index as i" value="{{cli.Name}}" >{{cli.Name}}</option>
+            </select>
+        </td>
+        <td class="text-al--left">
+            <!-- <input type="text" class="form-control" id="inputReg" name="Details" (change)="checkhour()" [(ngModel)]="Details" required > -->
+        <select class="form-control" name="ts.projectId" [(ngModel)]="ts.projectId" [disabled]="!cli_picked"  (change)="upProInd($event); toggleStaFlag($event); pro_picked=true">
+          <option  selected hidden>Choose Project</option>
+            <option value="{{j.title}}" *ngFor="let j of project; index as k" [hidden]="isEmpRelated(k)">{{j.title}}</option>
+        </select>
+</td>
+        <td class="text-al--left">
+            <!-- <input type="text" class="form-control" id="inputReg" name="Details" (change)="checkhour()" [(ngModel)]="Details" required > -->
+            <select class="form-control" name="ts.stageId" [(ngModel)]="ts.stageId" [disabled]="!pro_picked" (change)="upStaInd($event)">
+              <option   selected hidden>Choose Stage</option>
+                <option value="{{h.stage_title}}" *ngFor="let h of project[proj_i].Services.stages">{{h.stage_title}}</option>
+            </select>
+</td>
+        
+        <td class="text-al--left">
+            <input type="text" class="form-control" id="inputReg" name="ts.Details" (change)="checkhour()" [(ngModel)]="ts.Details" required >
+        </td>
+        <td class="text-al--left">
+           <a class="btn btn-primary" (click)="addTS()">ADD</a>
+        </td>
+      </tr>  
+    </tbody>         
+  </table>
+    </div>
+    <div class="col-sm-12 table-responsive">
+      <table class="table table-striped" *ngIf="!isCompany() || !maxDayDiff()">
+        <thead>
+            <tr >
+              <th>Date/Time</th>
+              <th>Entry Type</th>
+              
+              
+              <th>Details</th>
+            </tr>
+          </thead>
+      <tbody>
+      <tr *ngIf="!isCompany()&&!maxDayDiff()">
+        <td class="text-al--left">
+          <select class="form-control" name="ts.hour" [(ngModel)]="ts.hour" (change)="time_picked2=true" >
+            <option  selected hidden>Choose Time</option>
+            <option  *ngFor="let t of time" value="{{t}}" >{{toTime(t)}}</option>
+          </select>
+      </td>
+      <td class="text-al--left">
+          <!-- <input type="text" class="form-control" id="inputReg" name="Details" (change)="checkhour()" [(ngModel)]="Details" required >  -->
+        <select class="form-control" name="ts.entryType" [(ngModel)]="ts.entryType" [disabled]="!time_picked2" >
+            <option  selected hidden>Choose Entry Type</option>
+            <option  value="HolidayTime" >Holiday Day</option>
+            <option  value="Lunch" >Lunch</option>
+            <option  value="ProjectWork-Offline" >Project Work - Offline</option>
+            <option  value="OutOfOffice" >Out of Office</option>
+            <option  value="OfficeMeeting" >Office Meeting</option>
+          </select>
+      </td>
+    
+      
+      <td class="text-al--left">
+          <input type="text" class="form-control" id="inputReg" name="ts.Details" (change)="checkhour()" [(ngModel)]="ts.Details" required >
+      </td>
+      <td class="text-al--left">
+         <a class="btn btn-primary" (click)="addTSType()">ADD</a>
+      </td>
+    </tr> </tbody>         
+    </table></div>
+
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="page-header">
+          To Be Committed 
+        </h2>
+      </div>
+    <form #g="ngForm" (ngSubmit)="saveTS(g)">
+    <div class="table-responsive col-sm-12">          
+        <table class="table table-striped">
+            <thead>
+              <tr >
+                <th>Date/Time</th>
+                <th>Entry Type</th>
+                <th>Client</th>
+                <th>Project</th>
+                <th>Stage</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of times.hourly_ts; let i = index" >
+                  <td><p class="text-al--left">{{toTime(t.hour)}}</p> </td>
+                  <td><p class="text-al--left">{{t.entryType}}</p> </td>
+                  <td><p class="text-al--left" *ngIf="t.client">{{t.client.clTitle}}</p> </td>
+                  <td><p class="text-al--left" *ngIf="t.project">{{t.project.prTitle}}</p> </td>
+                  <td><p class="text-al--left" *ngIf="t.stage">{{t.stage.stTitle}}</p> </td>
+                  <td><p class="text-al--left">{{t.Details}}</p> </td>
+              </tr>
+              
+            </tbody>
+            <tfoot><tr><td class="text-al--left">
+                    <a class="btn btn-primary" (click)="saveTS()">SAVE</a>
+                 </td></tr>
+                
+            </tfoot>
+          </table>
+        </div>
+        </form>
+
+        <div class="col-lg-12">
+            <h2 class="page-header">
+              Committed Today
+            </h2>
+          </div>
+      <form #g="ngForm" (ngSubmit)="saveTS(g)">
+          <div class="table-responsive col-sm-12">          
+              <table class="table table-striped">
+                  <thead>
+                    <tr >
+                      <th>Date/Time</th>
+                      <th>Entry Type</th>
+                      <th>Client</th>
+                      <th>Project</th>
+                      <th>Stage</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let t of ts_today.hourly_ts;  index as i" [hidden]="!updateDateTS(i)">
+                        <td><p class="text-al--left">{{toTime(t.hour)}}</p> </td>
+                        <td><p class="text-al--left">{{t.entryType}}</p> </td>
+                        <td><p class="text-al--left" *ngIf="t.client">{{t.client.clTitle}}</p> </td>
+                        <td><p class="text-al--left" *ngIf="t.project">{{t.project.prTitle}}</p> </td>
+                        <td><p class="text-al--left" *ngIf="t.stage">{{t.stage.stTitle}}</p> </td>
+                        <td><p class="text-al--left">{{t.Details}}</p> </td>
+                    </tr>
+                    
+                  </tbody>
+             
+                </table>
+              </div>
+              </form>
+      
+</div><hr>
+<div class="row">
+  <div class="col-sm-4" *ngIf="account && !isCompany()">
+    <h4>Timesheets by Project</h4>
+    <form #f="ngForm" (ngSubmit)="viewTS(f)">
+        <!-- <input type="text" class="form-control" id="inputReg" name="Details" (change)="checkhour()" [(ngModel)]="Details" required >  -->
+      <select class="form-control col-sm-6" name="selCLient" [(ngModel)]="selClient"  (change)="selbyProj1=true; getProj($event)"  >
+          <option  selected hidden>Choose Client</option>
+          <option  *ngFor="let cli of client; index as i" value="{{cli._id}}" >{{cli.Name}}</option>
+        </select>
+ 
+   
+        <!-- <input type="text" class="form-control" id="inputReg" name="Details" (change)="checkhour()" [(ngModel)]="Details" required > -->
+    <select class="form-control  col-sm-6" name="selProject" *ngIf="selbyProj1" [(ngModel)]="selProject" [disabled]="!selbyProj1"  (change)="selbyProj2=true; ">
+      <option  selected hidden>Choose Project</option>
+        <option value="{{j.ref}}" *ngFor="let j of project; index as t" [hidden]="isEmpRelated(t)">{{j.title}}</option>
+    </select>
+    <button class="btn btn-primary col-sm-12" type="submit" [disabled]="!selbyProj1 && !selbyProj2" >View Project Timesheets</button>
+  </form>
+  </div>
+  <div class="col-sm-4" *ngIf="account && isCompany()">
+    <form #r="ngForm" (ngSubmit)="viewEmpTS(r)">
+    <h4>Timesheets by Employee</h4>
+      <select class="form-control  col-sm-12" name="selEmployee" [(ngModel)]="selEmployee">
+          <option  selected hidden>Choose Employee</option>
+            <option value="{{j._id}}" *ngFor="let j of account.employees; index as k" >{{j.empName}}</option>
+        </select>
+        <button type="submit" class="btn btn-primary col-sm-12" >View Employee Timesheets</button>
+      </form> 
+  </div>
+  <div class="col-sm-4" *ngIf="!isCompany()">
+      <h4>Timesheets by Date</h4>
+      <!-- <form class="form-inline col-sm-12">
+          <div class="form-group col-sm-12">
+            <div class="input-group col-sm-12">
+              <input class="form-control col-sm-12" placeholder="yyyy-mm-dd"
+                     name="dp" [(ngModel)]="model"  ngbDatepicker #d="ngbDatepicker" style="width:inherit;">
+              <div class="input-group-append" style=" margin:0 ; padding:0;">
+                <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button" style=" right:0;top:0;margin:0; padding:0;"> 
+                  <span class="glyphicon glyphicon-calendar" style=" cursor: pointer; font-size:.8em"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form> -->
+      <button class="btn btn-primary col-sm-12" (click)="viewDateTS();">View Employee Timesheets</button>
+  </div>
+</div>
+<div id="RemoveProjModal" class="FormModal" >
+      <h1>Remove Project<i class="glyphicon glyphicon-remove" (click)="closeModal()">
+    </i></h1>
+    
+      <form #l="ngForm" >
+       
+        <div class="form-group col-sm-12"><p>Are you sure you would like to remove this project?</p> 
+         
+      </div>   
+      <button class="btn btn-primary" (click)="removeProject()"> Remove</button>
+      <button class="btn btn-action" (click)="toggleRemoveModal()"> Cancel</button>
+      </form>
+      </div>
+
+  
+    
+    
+    
+    

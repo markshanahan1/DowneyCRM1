@@ -1,0 +1,85 @@
+<div class="col-sm-12" *ngIf="isEmpty()">
+<form>
+    <div class="col-sm-12">
+        <h4>Add Stage Group</h4>
+        <input #gname type="text" class="form-control " ><button (click)="addGroup(gname.value); gname.value=''" class=" btn btn-primary">Add</button></div>
+    
+    <div class="col-sm-6" *ngFor="let g of stages index as h">
+       
+        <ul class="servicegroups col-sm-12">
+            <h4>{{g.stage_title}}<span (click)="clearGroup(h)" class="glyphicon glyphicon-remove" style="color:red;"></span></h4> 
+            <li *ngFor="let info of stages[h].services index as i">
+                <p>{{ info.title }} <span (click)="clearItemfromGroup(h,i)" class="glyphicon glyphicon-remove" style="color:red;"></span></p>
+            </li>
+            <div class="col-sm-12 NewServiceInput"><input #newInfo type="text" class="form-control col-sm-10">
+                <button (click)="addInputtoGroup(newInfo.value,h); newInfo.value=''; newInfo.focus()" class="col-sm-2 btn btn-primary">Add</button></div>
+          </ul>
+         
+          
+    </div>
+   <div class="col-sm-12">
+       <button class="btn btn-primary" [disabled]="isSaveDisabled()" (click)="saveStages()">SAVE</button>
+       
+   </div>
+</form>
+      
+</div>
+<div class="col-sm-12" *ngIf="!isEmpty()">
+        <h2>Project Services Included<button class="btn btn-primary" (click)="toggleRemoveStageModal()"><span class="glyphicon glyphicon-remove"></span></button> </h2>
+        <ngb-tabset>
+            <ngb-tab *ngFor="let g of exStages[0].stages; index as h" title="Stage {{h+1}}" class="active">
+              <ng-template ngbTabContent>
+                <h4 class="text-al--left col-sm-6">  {{g.stage_title}} </h4>
+                  
+                  <div class="genBtn">
+                    
+                    <!-- <button (click)="index_h = h; genEstimate()" class="btn btn-primary dd-button">
+                        Estimate
+                    </button>
+                    <button (click)="index_h = h; genInvoice()" class="btn btn-primary dd-button "  [disabled]="!g.completed">
+                       Invoice
+                    </button> -->
+               </div>
+                <div class="table-responsive col-sm-12">          
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          
+                         
+                          <th class="col-sm-4">Title</th>
+                          <!-- <th class="col-sm-1">Fee</th>
+                          <th class="col-sm-2">Notes</th> -->
+                   
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let pro of g.services ; let i = index" >
+                          <td class="text-al--left col-sm-6"><p>{{pro.title}}</p></td>
+                          <!-- <td class="text-al--left col-sm-1"><p>€ {{pro.fee}}</p></td>
+                          <td class="text-al--left col-sm-2"><p>{{pro.notes}}</p></td> -->
+                         
+                        </tr>
+                      </tbody>
+                    </table>
+                    </div>
+                
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+</div>
+
+<div id="RemoveStageModal" class="FormModal" >
+  <h1>Remove Project<i class="glyphicon glyphicon-remove" (click)="toggleRemoveStageModal()">
+</i></h1>
+
+  <form #l="ngForm" >
+   
+    <div class="form-group col-sm-12"><p>Are you sure you would like to remove this project?</p> 
+     
+  </div>   
+  <button class="btn btn-primary" (click)="removeStage()"> Remove</button>
+  <button class="btn btn-action" (click)="toggleRemoveStageModal()"> Cancel</button>
+  </form>
+  </div>
+
+

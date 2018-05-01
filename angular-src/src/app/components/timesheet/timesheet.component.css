@@ -1,0 +1,99 @@
+
+
+
+.updateTimesheetForm{
+    font: 95% Arial, Helvetica, sans-serif;
+    width: 600px;
+    margin: 10px auto;
+    padding: 16px;
+    background: #F7F7F7;
+    position:fixed;
+    float: left;
+    top: 50%;
+    left: 50%;
+    -webkit-transform:  translate(-50%, -50%); /* Safari */
+    transform: translate(-50%, -50%);
+    -ms-transform:translate(-50%, -50%);
+    opacity:0;
+    box-shadow: 5px 5px 18px #888888;
+    display:none;
+}
+.updateTimesheetForm h1{
+    background: #72002f;
+    padding: 20px 0;
+    font-size: 140%;
+    font-weight: 300;
+    text-align: center;
+    color: #fff;
+    margin: -16px -16px 16px -16px;
+}
+.updateTimesheetForm h1 i{
+    
+    position:absolute;
+    top:20px;
+    right:20px;
+
+}
+.updateTimesheetForm input[type="text"],
+.updateTimesheetForm input[type="date"],
+.updateTimesheetForm input[type="datetime"],
+.updateTimesheetForm input[type="password"],
+.updateTimesheetForm input[type="email"],
+.updateTimesheetForm input[type="number"],
+.updateTimesheetForm input[type="search"],
+.updateTimesheetForm input[type="time"],
+.updateTimesheetForm input[type="url"],
+.updateTimesheetForm textarea,
+.updateTimesheetForm select 
+{
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    background: #fff;
+    margin-bottom: 4%;
+    border: 1px solid #ccc;
+    padding: 3%;
+    color: #555;
+    font: 95% Arial, Helvetica, sans-serif;
+}
+.updateTimesheetForm input[type="password"]:focus,
+.updateTimesheetForm input[type="text"]:focus,
+.updateTimesheetForm input[type="date"]:focus,
+.updateTimesheetForm input[type="datetime"]:focus,
+.updateTimesheetForm input[type="email"]:focus,
+.updateTimesheetForm input[type="number"]:focus,
+.updateTimesheetForm input[type="search"]:focus,
+.updateTimesheetForm input[type="time"]:focus,
+.updateTimesheetForm input[type="url"]:focus,
+.updateTimesheetForm textarea:focus,
+.updateTimesheetForm select:focus
+{
+    box-shadow: 0 0 5px #72002f;
+    padding: 3%;
+    border: 1px solid #72002f;
+}
+
+.updateTimesheetForm input[type="submit"],
+.updateTimesheetForm input[type="button"]{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    padding: 3%;
+    background: #72002f;
+    border-bottom: 2px solid #72002f;
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;    
+    color: #fff;
+}
+.updateTimesheetForm input[type="submit"]:hover,
+.updateTimesheetForm input[type="button"]:hover{
+    background: #72002f;
+}

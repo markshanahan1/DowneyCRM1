@@ -1,0 +1,42 @@
+<nav>
+
+  <div *ngIf="isLoggedIn()" (click)="toggleNav()" class="navtoggle">
+      <span class="glyphicon glyphicon-option-horizontal"></span>
+  </div>
+  <img class="logo" src="assets/images/downeycrm.png" alt="">
+<ul class="nav-l" *ngIf="!isLoggedIn()">
+      <li class="nav-link"  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="'/home'">Home</a></li>
+      <li class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="'/about'">About</a></li>
+      <li class="nav-link"[routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="'/feature'">Features</a></li>
+      <li class="nav-link"  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="'/contact'">Contact</a></li>
+  </ul>
+  <ul class="nav-r ">
+      <li class="nav-link" *ngIf="!isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="'/login'">Login</a></li>
+      <li class="nav-link" *ngIf="!isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="'/register'">Register</a></li>
+      <li class="nav-link" *ngIf="isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a href="#" (click)="onLogoutClick()">Log Out</a></li>
+  </ul>
+</nav>
+<div id="mySidenav" class="sidenav" *ngIf="isLoggedIn()">
+
+  <div class="profiler col-sm-12" *ngIf="isLoggedIn()">
+    <img src="../../assets/images/defaultprofile.jpeg" alt="">
+    <h4 class="text-al--center" >{{name}}</h4>
+    <!-- <h4 class="text-al--center" *ngIf="isCompanyLogged()">{{account.empName}}</h4> -->
+  </div>
+  <div class="profiler col-sm-12" *ngIf="isCompanyLogged()">
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/dashboard'"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a>
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/view-company-profile'"><i class="glyphicon glyphicon-user"></i> Profile</a>
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/employees-manager'"><i class="glyphicon glyphicon-heart"></i> Employee Management</a>
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/projects'"><i class="glyphicon glyphicon-folder-open"></i> Projects</a>
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/clients'"><i class="glyphicon glyphicon-cloud"></i> Clients</a>
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/stages'"><i class="glyphicon glyphicon-cloud"></i> Stages</a>
+     <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/timesheets'"><i class="glyphicon glyphicon-time"></i>Timesheets</a> 
+  </div>
+  <div class="profiler col-sm-12" *ngIf="!isCompanyLogged()">
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/dashboard'"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a>
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/view-employee-profile'"><i class="glyphicon glyphicon-user"></i> Profile</a>
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/projects'"><i class="glyphicon glyphicon-folder-open"></i> Projects</a>
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/clients'"><i class="glyphicon glyphicon-cloud"></i> Clients</a>
+    <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/timesheets'"><i class="glyphicon glyphicon-time"></i>Timesheets</a> 
+  </div>
+</div>

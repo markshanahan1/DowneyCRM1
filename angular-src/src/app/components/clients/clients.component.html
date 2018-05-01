@@ -1,0 +1,116 @@
+<div class="col-sm-12 " *ngIf="togClient">
+<form #f="ngForm" (ngSubmit)="onClientSubmit(f)">
+
+    <h1 class="center">Add New Client</h1>
+    <div class="form-group">
+      <label for="inputMob">Client Ref Number: (Next Available ID: {{getNextIDref()}})</label>
+      <input type="text" class="form-control" id="inputMob" name="ref" ngModel required #ref="ngModel">
+    </div>
+    <div class="form-group">
+      <label for="inputName">Client Name</label>
+      <input type="text" class="form-control" id="inputName" name="name" ngModel required #name="ngModel" [ngStyle]="myStyle1" (change)="myStyle1={border:checkInput(name.value)}">
+    </div>
+
+    <div class="form-group">
+      <label for="inputEmail">Client Email Address</label>
+      <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" name="Email" ngModel required #Email="ngModel" [ngStyle]="myStyle2" (change)="myStyle2={border:checkEmail(Email.value)};">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div> 
+
+    <div class="form-group">
+      <label for="inputAddress">Client Address</label>
+      <input type="text" class="form-control" id="inputAddress" name="address" ngModel required #address="ngModel" [ngStyle]="myStyle3" (change)="myStyle3={border:checkInput(address.value)};">
+    </div>
+    <div class="form-group">
+      <label for="inputMob">Client Mobile Number:</label>
+      <input type="text" class="form-control" id="inputMob" name="mobile" ngModel required #mobile="ngModel" [ngStyle]="myStyle4" (change)="myStyle4={border:checkInput(mobile.value)}">
+    </div>
+    <div class="form-group">
+      <label for="inputOff">Client Office Number:</label>
+      <input type="text" class="form-control" id="inputOff" name="office" ngModel required #office="ngModel" [ngStyle]="myStyle5" (change)="myStyle5={border:checkInput(office.value)};">
+    </div>
+  
+    
+  <input type="submit" class=" col-sm-6 btn btn-primary" value="Register"><button class="col-sm-6 btn btn-default" (click)="togClient = !togClient">Cancel</button>
+  </form> 
+</div>
+ <!-- Page Heading -->
+ <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+                        Client Manager <small>List Overview</small> <button class="btn btn-primary" (click)="togClient = !togClient"><i class="glyphicon glyphicon-plus"></i> Add New Client</button>
+                    </h1>
+      <ol class="breadcrumb">
+        <li >
+          <i class="fa fa-dashboard"></i> Dashboard
+        </li>
+        <li class="active">
+            <i class="fa fa-dashboard"></i> Client Manager
+          </li>
+      </ol>
+    </div>
+  </div>
+  <!-- /.row -->
+<div class="row">
+    <div class="col-sm-12">
+        
+      
+  
+            <div class="form-group">
+                   <p>Search and find your clients</p>
+                    <input type="text" class="searchTerm col-sm-6" placeholder="Search clients" name="query" [(ngModel)]="query" required #searchEntry="ngModel">
+                </div>
+    </div>
+
+</div>
+<div class="row">
+<ngb-tabset>
+    <ngb-tab  title="Active" class="active">
+      <ng-template ngbTabContent>
+        <div class="table-responsive">          
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile Number</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cli of (clients| orderBy:'ref') | client:query; index as i">
+                  <td class="text-al--left">{{makeRef(cli.ref)}}</td>
+                  <td class="text-al--left">{{cli.Name}}</td>
+                  <td class="text-al--left">{{cli.Email}}</td>
+                  <td class="text-al--left">+{{cli.MobileTel}}</td>
+                  <td class="text-al--left">
+                        <button class="btn btn-primary" matTooltip="View Client Details" (click)="viewClient(i)"><i class="glyphicon glyphicon-eye-open"></i></button>
+                      <button class="btn btn-action" matTooltip="Edit Client Details(Currently Unavailable)"><i class="glyphicon glyphicon-edit"></i></button>
+                      <button class="btn btn-action" matTooltip="Remove Client" (click)="toggleRemoveModal(i);"><i class="glyphicon glyphicon-remove"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+        
+      </ng-template>
+    </ngb-tab>
+   
+   
+  </ngb-tabset>
+</div>
+<div id="RemoveCliModal" class="FormModal" >
+    <h1>Remove Client<i class="glyphicon glyphicon-remove" (click)="toggleRemoveModal()">
+  </i></h1>
+  
+    <form #l="ngForm" >
+     
+      <div class="form-group col-sm-12"><p>Are you sure you would like to remove this client?</p> 
+       
+    </div>   
+    <button class="btn btn-primary" (click)="removeClient()"> Remove</button>
+    <button class="btn btn-action" (click)="toggleRemoveModal()"> Cancel</button>
+    </form>
+    </div>

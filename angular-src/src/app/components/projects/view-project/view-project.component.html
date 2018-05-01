@@ -1,0 +1,236 @@
+ <!-- Page Heading -->
+ <div class="row" *ngIf=" project">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+                        Project View: {{project.title}} 
+                    </h1>
+      <ol class="breadcrumb">
+        <li >
+          <i class="fa fa-dashboard"></i> Dashboard
+        </li>
+        <li >
+            <i class="fa fa-dashboard"></i> Project Manager
+          </li>
+        <li class="active">
+            <i class="fa fa-dashboard"></i> View Project
+          </li>
+      </ol>
+    </div>
+  </div>
+  <!-- /.row -->
+<div id="wrapper"><h2>Project Progress</h2>
+<div class="completion col-sm-12" ><div id="progressBar"><p class="text-al--center light" *ngIf="project">{{project.projectProgress }}%</p></div></div>
+
+
+<div class="col-sm-6 left">
+    <div class="projectItem col-sm-12" *ngIf="project">
+        <h2>Project Information</h2>
+        <h4>Project Title:<br><small>{{project.title}}</small></h4>
+        <h4>Project Leads:<br><small><span *ngFor="let emp of project.createdBy; index as i">{{emp}},</span> <button class="btn btn-primary" (click)="toggleLeadModal()" *ngIf="isUserLead()"><span class="glyphicon glyphicon-plus "></span></button></small></h4>
+        <h4>Project Site Address:<br><small>{{project.SiteAddress}}</small></h4>
+        <h4 *ngIf="isUserLead()">Project Budget:<br><small>€{{calcTotalBudget()}}</small></h4>
+        <h4>Employees Involved:<br><small ><span *ngFor="let emp of project.EmpInvolved; index as j">{{emp}},</span> <button class="btn btn-primary" (click)="toggleEmployeeModal()" *ngIf="isUserLead()"><span class="glyphicon glyphicon-plus "></span></button></small></h4>
+      </div>
+</div>
+<div class="col-sm-6 right">
+    <div class="projectItem col-sm-12" *ngIf="client">
+        <h2>Client Information</h2>
+        <h4>Client Name:<br><small>{{client.Name}}</small></h4>
+        <h4>Client Address:<br><small>{{client.Address}}</small></h4>
+        <h4>Client Email:<br><small>{{client.Email}}</small></h4>
+        <h4>Client Mobile:<br><small>{{client.MobileTel}}</small></h4>
+        <h4>Client Office:<br><small>{{client.OfficeTel}}</small></h4>
+    </div>
+</div>
+<hr style="width:100%; color:#72002f; background:#72002f;">
+<div class="col-sm-12" *ngIf="project ">
+  <h2>Project Services Included</h2>
+    <ngb-tabset *ngIf="project && account">
+        <ngb-tab *ngFor="let g of project.Services.stages; index as h" title="Stage {{h+1}}" class="active">
+          <ng-template ngbTabContent *ngIf="project && account">
+            <h4 class="text-al--left col-sm-6"><i class="glyphicon glyphicon-tag" [ngStyle]="{
+              color: budgetIndicator(h)}" style=" text-shadow: 2px 2px 5px #bbb;" *ngIf="isUserLead()" matTooltip="{{getStageBudget(h)}}"> </i> {{g.stage_title}} <span class="label label-success" *ngIf="g.completed"> COMPLETED</span>
+              <button class="btn btn-primary serviceBtn" (click)="index_h = h; toggleNewTimesheetModal()" matTooltip="Add Timesheets"><span class="glyphicon glyphicon-time"></span>
+                  
+              </button>
+              <button class="btn btn-action serviceBtn" (click)="index_h = h; toggleBudgetModal(h)" matTooltip="Edit Stage Budget" *ngIf="isUserLead()"><span class="glyphicon glyphicon-edit"></span>
+                
+              </button></h4>
+              
+              <div class="genBtn">
+                
+                <!-- <button (click)="index_h = h; genEstimate()" class="btn btn-primary dd-button">
+                    Estimate
+                </button>
+                <button (click)="index_h = h; genInvoice()" class="btn btn-primary dd-button "  [disabled]="!g.completed">
+                   Invoice
+                </button> -->
+           </div>
+            <div class="table-responsive col-sm-12">          
+                <table class="table table-striped" *ngIf="project && account">
+                  <thead>
+                    <tr>
+                      
+                      <th class="col-sm-1">Complete</th>
+                      <th class="col-sm-4">Title</th>
+                      <th class="col-sm-1">Fee</th>
+                      <th class="col-sm-2">Notes</th>
+                      <th class="col-sm-4">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="project && account">
+                    <tr *ngFor="let pro of g.services ; let i = index" [hidden]="!pro.isActive">
+                      <td class="text-al--left col-sm-1"><input type="checkbox" name="pro.complete" [(ngModel)]="pro.complete" (change)="onServicesChange()" value=""></td>
+                      <td class="text-al--left col-sm-6"><p>{{pro.title}}</p></td>
+                      <td class="text-al--left col-sm-1"><p>€ {{pro.fee}}</p></td>
+                      <td class="text-al--left col-sm-2"><p>{{pro.notes}}</p></td>
+                      <td class="text-al--left col-sm-2">
+                          <button class="btn btn-primary  serviceBtn" (click)="toggleNoteBtn(h,i)" matTooltip="Edit Service Notes"> <i class="glyphicon glyphicon-comment"></i></button><button class="btn btn-action serviceBtn" (click)="toggleFeeBtn(h,i)" matTooltip="Edit Service Fees"><i class="glyphicon glyphicon-euro"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+            
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+         </div>
+
+         <button class="btn btn-primary" (click)="updateProgress()" [disabled]="!updateflag">UPDATE</button>
+
+<!-- <div class="col-sm-6 right" *ngIf="project.Services">
+    <h2>Project Services Included</h2>
+    <div class="col-sm-12 projectItem" *ngFor="let g of project.Services.stages; index as h">
+            
+        <ul class="servicegroups col-sm-12">
+            <h4> <!--<span [ngClass]="{
+              'budget_fail': g.budget <= 'Error', 
+              'budget_warning': g.budget === 'Warning', 
+              'budget_ok': g.budget === 'Ignored'}"></span> {{g.stage_title}}</h4> 
+            <li *ngFor="let info of g.services index as i" [hidden]="!info.isActive">
+                <div class="col-sm-9"><p > <input type="checkbox" name="info.complete" [(ngModel)]="info.complete" (change)="onServicesChange()" value="">{{ info.title }} </p></div>
+                <div class="col-sm-3"><button class="btn btn-primary rounded  serviceBtn" (click)="toggleNoteBtn(h,i)"> <span class="glyphicon glyphicon-comment"></span></button><button class="btn btn-primary rounded serviceBtn" (click)="toggleFeeBtn(h,i)"><span class="glyphicon glyphicon-euro"></span></button></div>
+            </li>
+            
+          </ul>
+          </div>
+          <button class="btn btn-primary" (click)="updateProgress()" [disabled]="!updateflag">UPDATE</button>
+</div> -->
+
+<div id="ModalBoxFee" class="FormModal" *ngIf="project && account">
+    <h1>Update Service Fee<i class="glyphicon glyphicon-remove" (click)="closeModal()">
+  </i></h1>
+    <form #g="ngForm" (ngSubmit)="updateFee(g)">
+      
+       <p class="bold" *ngIf="project">{{dialog_title}}</p>
+
+        <label for="InputDay1" class="col-sm-2">Service Fee:
+          <p>€</p><input type="Number" class="form-control" id="InputFee" name="upFee" required [(ngModel)]="upFee">
+        </label>
+      <input type="submit" value="Update Service Fee" />
+    </form>
+    </div>
+    <div id="ModalBoxNote" class="FormModal" *ngIf="project && account">
+        <h1>Update Service Notes<i class="glyphicon glyphicon-remove" (click)="closeModal()">
+      </i></h1>
+        <form #f="ngForm" (ngSubmit)="updateNote(f)">
+          
+           <h4 class="bold" *ngIf="project">{{dialog_title}}</h4>
+    
+         <h4>Service Note:</h4>
+                <textarea rows="4" class="form-control" id="Inputnote"  name="upNote"  required [(ngModel)]="upNote"></textarea>
+            
+          <input type="submit" value="Update Service Fee" />
+        </form>
+        </div>
+    <!--  --></div>
+    <div id="addEmployeeForm" class="FormModal" *ngIf="project && account">
+        <h1>Add Employee to Project<i class="glyphicon glyphicon-remove" (click)="closeModal()">
+          </i></h1>
+        <form #k="ngForm" (ngSubmit)="addEmpToProj(k)">
+            <div class="col-sm-12">
+              <p >Who would you like to add to this project.
+               
+               </p>
+             </div>
+             <div class="form-group">
+               <label for="inputName">Employee:</label>
+               <select class="form-control" name="employee" #employee="ngModel" ngModel  >
+                 <option value="{{f.empUsername}}" *ngFor="let f of employees; index as h">{{f.empName}}</option>
+                 
+                   <button class="btn btn-primary"(click)="addEmpToProj(h)"><i class="glyphicon glyphicon-plus"></i></button>
+               </select>
+               <ul>
+                 <li *ngFor="let d of empList">{{d}}</li>
+               </ul>
+              
+             </div>
+             
+          
+         
+         
+         
+            
+             <input type="submit" value="Add employee to project" />
+           </form>
+      </div>
+
+
+      <div id="addLeadForm" class="FormModal" *ngIf="project && account">
+        <h1>Add Employee to Lead Project<i class="glyphicon glyphicon-remove" (click)="closeModal()">
+          </i></h1>
+        <form #q="ngForm" (ngSubmit)="addProjLead(q)">
+            <div class="col-sm-12"><p >Who would you like to add to this project. </p>  </div>
+             <div class="form-group">
+               <label for="inputName">Employee:</label>
+               <select class="form-control" name="employee" #employee="ngModel" ngModel  >
+                 <option value="{{f.empUsername}}" *ngFor="let f of employees; index as h">{{f.empName}}</option>
+                   <button class="btn btn-primary"(click)="addEmpToProj(h)"><i class="glyphicon glyphicon-plus"></i></button>
+               </select>
+               <ul>
+                 <li *ngFor="let d of empList">{{d}}</li>
+               </ul>
+              
+             </div>
+          
+             <input type="submit" value="Add employee to project" />
+           </form>
+      </div>
+      <div id="BudgetModal" class="FormModal" *ngIf="project && account">
+        <h1>Update Stage Budget<i class="glyphicon glyphicon-remove" (click)="closeModal()">
+      </i></h1>
+      
+        <form #l="ngForm" (ngSubmit)="onBudgetSubmit(l)">
+         
+          <div class="form-group col-sm-12"><h4>Set Budget</h4>  
+            <input type="number" class="form-control" id="inputBudget" placeholder="Enter Stage Budget" name="upBudget" [(ngModel)]="upBudget" required >
+        </div>   
+          <input type="submit" value="Add Timesheet"/>
+        </form>
+        </div>
+
+
+
+    <table id="basic-table" style="display: none;" *ngIf="project && account">
+        <h4>{{project.Services.stages[index_h].stage_title}}</h4>
+        <thead>
+          <tr >
+            
+            <th>Service Name</th>
+            <th>Fee</th>
+            <th>Notes</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let g of project.Services.stages[index_h].services; index as h" [hidden]="!g.isActive">
+
+            <td>{{g.title}}</td>
+            <td>€{{g.fee}}</td>
+            <td>{{g.notes}}</td>
+
+          </tr>
+
+        </tbody>
+      </table>

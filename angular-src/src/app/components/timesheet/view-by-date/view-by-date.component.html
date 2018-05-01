@@ -1,0 +1,54 @@
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+                        Timesheet View:<small>By Date</small>
+                    </h1>
+      <ol class="breadcrumb">
+        <li >
+          <i class="fa fa-dashboard"></i> Dashboard
+        </li>
+        <li >
+            <i class="fa fa-dashboard"></i> Timesheet Manager
+          </li>
+        <li class="active">
+            <i class="fa fa-dashboard"></i> View Timesheet By Date
+          </li>
+      </ol>
+    </div>
+  </div>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-sm-4"><button class="btn btn-primary col-sm-12" (click)="nextDay()"><i class="glyphicon glyphicon-chevron-left"></i> Previous Day</button></div>
+    <div class="col-sm-4"><p class="label label-default col-sm-12 text-al--center fa-2x">{{displayDate()}}</p></div>
+    <div class="col-sm-4"><button class="btn btn-primary col-sm-12" (click)="previousDay()">Next Day <i class="glyphicon glyphicon-chevron-right"></i></button></div>
+
+  </div>
+<div class="table-responsive col-sm-12">          
+    <table class="table table-striped">
+        <thead>
+          <tr >
+  
+            <th>Time</th>
+            <th>Entry Type</th>
+            <th>Client</th>
+            <th>Project</th>
+            <th>Stage</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of ts_list.hourly_ts; index as i" [hidden]="!updateDateTS(i)">
+         
+              <td><p class="text-al--left">{{toTime(t.hour)}}</p> </td>
+              <td><p class="text-al--left">{{t.entryType}}</p> </td>
+              <td><p class="text-al--left" *ngIf="t.client">{{t.client.clTitle}}</p> </td>
+              <td><p class="text-al--left" *ngIf="t.project">{{t.project.prTitle}}</p> </td>
+              <td><p class="text-al--left" *ngIf="t.stage">{{t.stage.stTitle}}</p> </td>
+              <td><p class="text-al--left">{{t.Details}}</p> </td>
+          </tr>
+          
+        </tbody>
+        
+      </table>
+    </div>

@@ -1,0 +1,61 @@
+<form #f="ngForm" (ngSubmit)="onCompanySubmit(f)">
+
+    <h1 class="center">Register Company</h1>
+    <div class="col-sm-6 left">
+    
+    <div class="form-group">
+      <label for="inputName">Company UserName</label>
+      <input type="text" class="form-control" id="inputName" name="compname" ngModel required #compname="ngModel" [ngStyle]="myStyle1" (change)="myStyle1={border:checkInput(compname.value)}">
+    </div>
+    <div class="form-group">
+      <label for="inputTitle">Company Title</label>
+      <input type="text" class="form-control" id="inputTitle" name="comptitle" ngModel required #comptitle="ngModel" [ngStyle]="myStyle2" (change)="myStyle2={border:checkInput(comptitle.value)}">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail">Email address</label>
+      <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" [ngStyle]="myStyle3" (change)="myStyle3={border:checkEmail(email.value)}" name="email" ngModel required #email="ngModel">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div> 
+    <div class="form-group">
+        <label for="InputPassword">Password</label>
+        <input type="password" class="form-control" name="password" ngModel [ngStyle]="myStyle4" (change)="myStyle4={border:checkPass(password.value)}" required #password="ngModel" id="InputPassword" placeholder="Enter Password">
+        <small id="emailHelp" class="form-text text-muted">Password requires two of the following: Uppercase Letter, Lowercase Letters & Numbers with at least 8 characters.</small>
+      </div>
+    <div class="form-group">
+      <label for="inputWebsite">Website:</label>
+      <input type="text" class="form-control" id="inputWebsite" name="website" ngModel required #website="ngModel" [ngStyle]="myStyle5" (change)="myStyle5={border:checkInput(website.value)}">
+    </div>
+    <div class="form-group">
+      <label for="inputReg">Registration Number:</label>
+      <input type="text" class="form-control" id="inputReg" name="companyRegNum" ngModel required #companyRegNum="ngModel" [ngStyle]="myStyle5" (change)="myStyle5={border:checkInput(companyRegNum.value)}">
+    </div>
+    </div>
+     <div class="col-sm-6 right">
+       <div class="form-group">
+      <label for="inputPhone">Phone Number</label>
+      <input type="text" class="form-control" id="inputPhone"  name="phone" ngModel required #phone="ngModel" [ngStyle]="myStyle6" (change)="myStyle6={border:checkInput(phone.value)}">
+    </div>
+        <div class="form-group">
+      <label for="inputAddress">Address Line 1</label>
+      <input type="text" class="form-control" id="inputAddress" name="street" ngModel required #street="ngModel" [ngStyle]="myStyle7" (change)="myStyle7={border:checkInput(street.value)}">
+    </div>
+     <div class="form-group">
+      <label for="inputTown">Town</label>
+      <input type="text" class="form-control" id="inputTown"  name="town" ngModel required #town="ngModel" [ngStyle]="myStyle8" (change)="myStyle8={border:checkInput(town.value)}">
+    </div>
+     <div class="form-group">
+      <label for="inputCounty">County</label>
+      <input type="text" class="form-control" id="inputCounty" name="county" ngModel required #county="ngModel" [ngStyle]="myStyle9" (change)="myStyle9={border:checkInput(county.value)}">
+    </div>
+     <div class="form-group">
+      <label for="inputCountry">Country</label>
+      <input type="text" class="form-control" id="inputCountry" name="country" ngModel required #country="ngModel" [ngStyle]="myStyle10" (change)="myStyle10={border:checkInput(country.value)}">
+    </div>
+  
+    <br>
+<hr><br>
+  </div>
+  
+   <input type="submit" class=" col-sm-12 btn btn-default" value="Register">
+   <br>
+</form>

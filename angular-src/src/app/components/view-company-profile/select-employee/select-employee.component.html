@@ -1,0 +1,74 @@
+
+<div class="row">
+    <div class="col-lg-12" *ngIf="account">
+      <h1 class="page-header" >
+                        {{account.empName}} <small *ngIf="account">Profile View</small>
+                    </h1>
+      <ol class="breadcrumb">
+        <li >
+          <i class="fa fa-dashboard"></i> Dashboard
+        </li>
+        <li >
+            <i class="fa fa-dashboard"></i> Profile
+          </li>
+          <li >
+              <i class="fa fa-dashboard"></i>{{account.empName}}
+            </li>
+      </ol>
+    </div>
+  </div>
+<div class="col-sm-12 viewprofile">
+
+  <div class="col-sm-3">
+      <img class="img-responsive img-circle addMargin" src="../../../../assets/images/defaultprofile.jpeg" alt=""> 
+      <button class="btn btn-primary col-sm-12" (click)="EditUser()"><i [ngClass]="editMode ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'" ></i>Edit Mode </button> 
+  </div>
+  <div class="col-sm-9 " *ngIf="account && !editMode">
+     
+      <div class="col-sm-12 ">
+        <h2 class="prim text-al--left">PERSONAL INFORMATION</h2>
+      <h4 class="dark text-al--left">Email<br> <small>{{account.empEmail}}</small></h4>
+      
+      
+      <h4 class="dark text-al--left">Username<br><small>{{account.empUsername}}</small></h4>
+      
+      <h4 class="dark text-al--left">Position<br><small>
+        {{account.empPosition}}
+      </small></h4>
+      
+       <h4 class="dark text-al--left">Phone Number<br><small> {{account.empPhone}}</small></h4>
+       <h4 class="dark text-al--left">Wage per Hour<br><small> €{{account.empHrRate}}</small></h4>
+      
+       <h4 class="dark text-al--left">Date of Birth<Br><small> {{account.empDob}}</small></h4>
+      </div>
+  </div>
+  <div class="col-sm-9 " *ngIf="account && editMode">
+     
+      <div class="col-sm-12 ">
+        <form #f="ngForm" (ngSubmit)="onEmployeeUpdate(f)">
+        <h2 class="prim text-al--left">PERSONAL INFORMATION</h2>
+        <h4 class="dark text-al--left">Name<br>  
+          <input type="text" class="form-control" id="InputempName" name="account.empName" [(ngModel)]="account.empName" required placeholder="Enter Full Name" [ngStyle]="myStyle1" (change)="myStyle1={border:checkInput(account.empName.value)}; edited=true">
+        </h4>
+      <h4 class="dark text-al--left">Email<br> <input type="email" class="form-control" id="InputempEmail" aria-describedby="emailHelp" placeholder="Enter Email" name="account.empEmail"  required [(ngModel)]="account.empEmail" [ngStyle]="myStyle3" (change)="myStyle3={border:checkEmail(account.empEmail.value)};  edited=true">
+      </h4>
+      
+      
+      
+      
+      <h4 class="dark text-al--left">Position<br><input type="text" class="form-control" id="inputempPosition" placeholder="Enter Position" name="account.empPosition" required [(ngModel)]="account.empPosition" [ngStyle]="myStyle6" (change)="myStyle6={border:checkInput(account.empPosition.value)};  edited=true"></h4>
+      
+       <h4 class="dark text-al--left">Phone Number<br><input type="text" class="form-control" id="Inputempphone" placeholder="phone" name="account.empPhone"  required [(ngModel)]="account.empPhone" [ngStyle]="myStyle8" (change)="myStyle8={border:checkInput(account.empPhone.value)};  edited=true"></h4>
+      
+       <h4 class="dark text-al--left">Wage per Hour<Br>
+        <input type="number" class="form-control" id="inputempHrRate" placeholder="Enter Hourly Rate" name="account.empHrRate"  required   [(ngModel)]="account.empHrRate"  [ngStyle]="myStyle7" (change)="myStyle7={border:checkInput(account.empHrRate.value)};  edited=true">
+       </h4>
+      
+       <h4 class="dark text-al--left">Date of Birth<Br>
+        <input type="text" class="form-control" id="Inputempdob" placeholder="Date of Birth" name="account.empDob"  [(ngModel)]="account.empDob"  required [ngStyle]="myStyle5" (change)="myStyle5={border:checkDOB(account.empDob.value)}; edited=true ">
+       </h4>
+       <button class="col-sm-4 btn btn-primary" type="submit" [disabled]="!edited">Update Profile</button>
+      </form>
+    </div>
+  </div>
+  

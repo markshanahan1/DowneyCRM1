@@ -1,0 +1,126 @@
+nav{
+    width:100%;
+    height:60px;
+    position:relative;
+    background:#72002f;
+}
+.logo{
+    height:100%;
+    width:auto;
+    float:left;
+    margin-right:2em;
+}
+.navtoggle{
+    position:relative;
+    width:60px;
+    height:100%;
+    background:#111;
+    float:left;
+}
+.navtoggle > span{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #72002f;
+    font-size: 2em;
+    transform-origin: 50% -10% ;
+}
+.navtoggle:hover > span{
+   transform: rotate(90deg);
+   
+    font-size: 3em;
+}
+ul.nav-r {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height:100%;
+    background-color:none;
+    color:#fff;
+    float:right;
+}
+ul.nav-l {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height:100%;
+    background-color:none;
+    color:#fff;
+    float:left;
+}
+
+li.nav-link {
+    line-height:60px;
+    padding-right:1em;
+    display:inline;
+}
+
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+.profiler > a.btn{
+    height:40px;
+    min-width:80px;
+   text-align: center;
+    margin-top: .5em;
+    margin-bottom:.5em;
+    display:block;
+    position:relative;
+    padding:1em;
+    font-size: .8em;
+    text-transform: uppercase;
+    border:none;
+}
+.profiler >a.btn-primary{
+    color:#fff;
+    background:#72002f;
+    
+
+}
+.profiler >a.btn-primary:hover{
+    color:#fff;
+    background:#5b0026;
+}
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+.profiler img{
+    margin:1em auto;
+    display:block;
+    position:relative;
+    width:80%;
+    height:auto;
+    border-radius:900px;
+}
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}

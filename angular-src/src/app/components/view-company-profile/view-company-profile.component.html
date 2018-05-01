@@ -1,0 +1,21 @@
+<div class="col-sm-12 viewprofile">
+  <div class="col-sm-3 " *ngIf="account">
+      <img class="img-responsive img-circle addMargin" src="../../../../assets/images/defaultprofile.jpeg" alt=""> 
+      <h2 class="dark text-al--center" *ngIf="account.title">{{account.title}}<br> <small>{{account.email}}</small></h2>
+
+  
+  </div>
+  <div class=" col-sm-8 right">
+    
+      
+      <h2 class="prim text-al--left">INFORMATION</h2>
+      <h4 class="dark text-al--left" *ngIf="account.name">Username<br><small>{{account.name}}</small></h4>
+      
+      
+       <h4 class="dark text-al--left" *ngIf="account.phone">Phone Number<br><small> {{account.phone}}</small></h4>
+      
+      
+       <h4 class="dark text-al--left" *ngIf="account.companyRegNum">Company Registration Number<Br><small> {{account.companyRegNum}}</small></h4>
+        <h4 class="dark text-al--left" *ngIf="account.town">Address<Br><small> {{account.street}},<br>{{account.town}},<br>{{account.county}},<br>{{account.country}},<br></small></h4>
+  </div>
+</div>
